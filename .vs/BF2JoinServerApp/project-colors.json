@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "f5e15832-f5ff-4110-9865-85d0ac31e412": {
+      "ProjectGuid": "f5e15832-f5ff-4110-9865-85d0ac31e412",
+      "DisplayName": "BF2JoinServerApp",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

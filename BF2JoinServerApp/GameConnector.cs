@@ -22,18 +22,32 @@ namespace BF2JoinServerApp
             server.Start();
         }
 
-        public void LaunchGame(string path, string workingDirectory)
+        //"+modPath mods/bf2all64"
+        public void LaunchGame(string path, string workingDirectory, string? args = null)
         {
-
-            ProcessStartInfo startInfo = new ProcessStartInfo
+            if (String.IsNullOrEmpty(args))
             {
-                FileName = path,
-                WorkingDirectory = workingDirectory,
-                Arguments = "+modPath mods/bf2all64",
-                UseShellExecute = false
-            };
-            
-            Process.Start(startInfo);
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = path,
+                    WorkingDirectory = workingDirectory,
+                    UseShellExecute = false
+                };
+                Process.Start(startInfo);
+            }
+            else
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = path,
+                    WorkingDirectory = workingDirectory,
+                    Arguments = args,
+                    UseShellExecute = false
+                };
+                Process.Start(startInfo);
+            }
+
+           
         }
     }
 }

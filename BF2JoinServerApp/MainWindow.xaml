@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BF2JoinServerApp"
         mc:Ignorable="d"
-        Title="BF2 Local Servers" Height="450" Width="350" 
+        Title="BF2 Local Servers" Height="550" Width="450" 
         ResizeMode="NoResize">
 
     <Window.Resources>
@@ -21,7 +21,7 @@
             <Setter Property="Height" Value="40"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
-                     
+
         </Style>
         <!--Button Style-->
         <Style TargetType="Button">
@@ -40,22 +40,22 @@
             <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <ListView x:Name="ProfileListView"  Grid.Row="1" Margin="20, 0, 20, 10" Opacity="0.9" Background="#FFF2FFFF" >
+
+        <ListView x:Name="ProfileListView"  Grid.Row="1" Margin="20, 0, 20, 10" Opacity="0.9" Background="#FFF2FFFF" FontSize="20" >
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Battlefield 2 Profile List">
                     <GridView.Columns>
                         <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Profiles" Width="200"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding PlayTime}" Header="Playtime" Width="80"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding PlayTime}" Header="Playtime" Width="auto"/>
 
 
 
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
-            
+
         </ListView>
-        <Button x:Name="HostButton"  Grid.Row="2" Height="50" Margin="20,0,180,10" FontSize="24" Click="HostButton_Click">
+        <Button x:Name="HostButton"  Grid.Row="1" Margin="20,356,236,24" FontSize="24" Click="HostButton_Click" Grid.RowSpan="2">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD12807" Offset="0.91"/>
@@ -66,8 +66,9 @@
                     <GradientStop Color="#FFE72801" Offset="0.598"/>
                     <GradientStop Color="#FFE12901" Offset="0.748"/>
                 </LinearGradientBrush>
-            </Button.Background> Host</Button>
-        <Button Height="50" Margin="180,0,20,10" Grid.Row="2"  FontSize="24">
+            </Button.Background> Host
+        </Button>
+        <Button Margin="236,356,20,24" Grid.Row="1"  FontSize="24" Grid.RowSpan="2">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD12807" Offset="0.91"/>
@@ -78,6 +79,7 @@
                     <GradientStop Color="#FFE72801" Offset="0.598"/>
                     <GradientStop Color="#FFE12901" Offset="0.748"/>
                 </LinearGradientBrush>
-            </Button.Background> Join</Button>
+            </Button.Background> Join
+        </Button>
     </Grid>
 </Window>

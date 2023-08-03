@@ -8,10 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="background1.png" />
     <None Remove="bf2 background.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="background1.png" />
     <Resource Include="bf2 background.png" />
   </ItemGroup>
 

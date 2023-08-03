@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net.Sockets;
+using System.Net;
+using System.Diagnostics;
 
 namespace BF2JoinServerApp
 {
@@ -23,44 +26,47 @@ namespace BF2JoinServerApp
         public MainWindow()
         {
             InitializeComponent();
-            
-            HostList.ItemsSource=LocalHosts.GetLocalHosts();
+
+            ProfileListView.ItemsSource = Profile.GetProfiles();
         }
 
-    }
-
-    public class LocalHosts
-    {
-        public static List<LocalHost> GetLocalHosts()
+        private void HostButton_Click(object sender, RoutedEventArgs e)
         {
 
-            return new List<LocalHost>
-            {
-                new LocalHost("Shed1", "192.168.1.90", false),
-                new LocalHost("Shed2", "192.168.1.91", false),
-                new LocalHost("Shed3", "192.168.1.92", false),
-                new LocalHost("Shed4", "192.168.1.93", false),
-                new LocalHost("TobyLaptop", "192.168.1.94", false),
-                new LocalHost("DH37C2P", "192.168.1.95", false),
-                new LocalHost("Bunghole", "192.168.1.96", false),
-                new LocalHost("Shed5", "192.168.1.97", false)
-            };
+            GameConnector gameConnector = new GameConnector();
+            gameConnector.HostGame();
+            gameConnector.LaunchGame("C:\\Program Files (x86)\\EA Games\\Battlefield 2\\BF2.exe");
+
         }
     }
 
-    public class LocalHost
+   
+
+    public class Profile
     {
-        public LocalHost(string name, string iPAddress, bool isActive)
+        public Profile(string name, int playTime)
         {
             this.Name = name;
-            this.IPAddress = iPAddress;
-            this.IsActive = isActive;
+            this.PlayTime = playTime;
         }
 
-        public string Name { get; set; }    
-        public string IPAddress { get; set; }
-        public bool IsActive { get; set; }
+        public string Name { get; set; }
+        public int PlayTime { get; set; }
 
+        public static List<Profile> GetProfiles()
+        {
+
+            return new List<Profile>
+            {
+                new Profile("JoeBiden", 120),
+                new Profile("BiggoNiggo", 120),
+                new Profile("WonkasFirstChoice", 120),
+                new Profile("ButtholeSurfer", 120),
+                new Profile("Shed5", 120),
+                new Profile("Shed6", 120),
+                new Profile("Shed7", 120),
+            };
+        }
     }
 }
 

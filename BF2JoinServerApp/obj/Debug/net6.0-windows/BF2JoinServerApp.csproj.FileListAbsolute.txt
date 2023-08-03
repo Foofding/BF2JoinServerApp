@@ -7,7 +7,6 @@ C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\bin\Debug\net6.0-w
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\bin\Debug\net6.0-windows\BF2JoinServerApp.deps.json
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\bin\Debug\net6.0-windows\BF2JoinServerApp.runtimeconfig.json
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\bin\Debug\net6.0-windows\BF2JoinServerApp.dll
-C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\bin\Debug\net6.0-windows\ref\BF2JoinServerApp.dll
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\bin\Debug\net6.0-windows\BF2JoinServerApp.pdb
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\MainWindow.baml
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp.g.resources
@@ -19,3 +18,4 @@ C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-w
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\ref\BF2JoinServerApp.dll
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp.pdb
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp.genruntimeconfig.cache
+C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\refint\BF2JoinServerApp.dll

@@ -35,7 +35,7 @@ namespace BF2JoinServerApp
 
             GameConnector gameConnector = new GameConnector();
             gameConnector.HostGame();
-            gameConnector.LaunchGame("C:\\Program Files (x86)\\EA Games\\Battlefield 2\\BF2.exe");
+            gameConnector.LaunchGame("C:\\Program Files (x86)\\EA Games\\Battlefield 2\\BF2.exe", "C:\\Program Files (x86)\\EA Games\\Battlefield 2");
 
         }
     }

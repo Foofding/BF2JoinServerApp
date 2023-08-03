@@ -6,28 +6,34 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace BF2JoinServerApp
 {
     class GameConnector
     {
+
+        
+
         public void HostGame()
         {
             int port = 12345;
             TcpListener server = new TcpListener(IPAddress.Any, port);
-            server.Start();            
+            server.Start();
         }
 
-        public void LaunchGame(string path)
+        public void LaunchGame(string path, string workingDirectory)
         {
-            try
+
+            ProcessStartInfo startInfo = new ProcessStartInfo
             {
-                Process.Start(path, "+modPath mods/bf2all64");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
+                FileName = path,
+                WorkingDirectory = workingDirectory,
+                Arguments = "+modPath mods/bf2all64",
+                UseShellExecute = false
+            };
+            
+            Process.Start(startInfo);
         }
     }
 }

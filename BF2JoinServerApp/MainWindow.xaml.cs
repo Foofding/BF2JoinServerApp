@@ -40,9 +40,20 @@ namespace BF2JoinServerApp
             gameConnector.LaunchGame("C:\\Program Files (x86)\\EA Games\\Battlefield 2\\BF2.exe", "C:\\Program Files (x86)\\EA Games\\Battlefield 2", "+modPath mods/bf2all64");
 
         }
+
+        private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("Clicked");
+        }
+
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Console.WriteLine("Clicked2");
+
+        //}
     }
 
-   
+
 
     public class Profile
     {

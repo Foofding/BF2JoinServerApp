@@ -13,6 +13,24 @@ namespace BF2JoinServerApp.Services
         private ProfileRepository _profileRepository;
 
         /// <summary>
+        /// Gets and returns _profiles list
+        /// </summary>
+        /// <returns>Dictionary of profiles</returns>
+        public List<Profile> GetProfiles()
+        {
+            return _profileRepository.GetProfiles();
+        }
+
+        /// <summary>
+        /// Gets and returns _profileFiles dict
+        /// </summary>
+        /// <returns>Dictionary of profiles</returns>
+        public Dictionary<string, Profile> GetProfileFiles()
+        {
+            return _profileRepository.GetProfileFiles();
+        }
+
+        /// <summary>
         /// Constructor to initialize the ProfileService
         /// </summary>
         public ProfileService()
@@ -56,15 +74,6 @@ namespace BF2JoinServerApp.Services
         public void CopyProfile(string profileFolderName)
         {
             _profileRepository.CopyProfile(profileFolderName);
-        }
-
-        /// <summary>
-        /// Method to get a dictionary of all profiles with their details
-        /// </summary>
-        /// <returns>A dictionary containing profile names as keys and Profile objects as values</returns>
-        public Dictionary<string, Profile> GetProfiles()
-        {
-            return _profileRepository.LoadProfiles();
         }
 
         /// <summary>

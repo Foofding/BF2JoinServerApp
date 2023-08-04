@@ -19,13 +19,24 @@ namespace BF2JoinServerApp
 
             if (!_gameRepository.CheckInstallation())
             {
-
+                // TODO: ERROR prompt needs to appear if BF2 directory isn't found
             }
 
             InitializeComponent();
 
-            ProfileListView.ItemsSource = _profileService.GetTestProfiles();
+            ProfileListView.ItemsSource = _profileService.GetProfiles();
             ProfileListView.HorizontalAlignment = HorizontalAlignment.Left;
+
+            // TODO: Runetime error because Directory.CreateDirectory makes new profile folder read-only
+            //_profileService.CopyProfile("0006");
+
+            //_profileService.DeleteProfile("0007");
+
+            //_profileService.CreateProfile("NEW Created PLAYER Test!");
+
+            _profileService.RenameProfile("0008", "Changed name!");
+
+            InitializeComponent();
         }
 
         private void HostButton_Click(object sender, RoutedEventArgs e)

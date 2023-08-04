@@ -35,7 +35,7 @@ namespace BF2JoinServerApp
 
             //_profileService.CreateProfile("NEW Created PLAYER Test!");
 
-            _profileService.RenameProfile("0008", "Changed name!");
+            //_profileService.RenameProfile("0008", "Changed name!");
 
             InitializeComponent();
         }
@@ -46,6 +46,12 @@ namespace BF2JoinServerApp
             gameConnector.HostGame();
             //"+modPath mods/bf2all64"
             gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), " +modPath mods/bf2all64 +joinServer 192.168.0.116 +playerName COPYTEST1");
+        }
+
+        private void JoinButton_Click(object sender, RoutedEventArgs e)
+        {
+            GameConnectorService gameConnector = new GameConnectorService();
+            gameConnector.HostGame();
         }
     }
 }

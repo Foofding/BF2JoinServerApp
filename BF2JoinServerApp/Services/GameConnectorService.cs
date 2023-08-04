@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-
+using System.Transactions;
 
 namespace BF2JoinServerApp
 {
@@ -26,12 +26,13 @@ namespace BF2JoinServerApp
             Console.WriteLine(hostName);
 
             // Get the IP from GetHostByName method of dns class.
-            string ipAddress = Dns.GetHostByName(hostName).AddressList[0].ToString();
-            string subnet = ipAddress.Substring(0, ipAddress.LastIndexOf('.'));
+            string ipAddress = Dns.GetHostEntry(hostName).ToString();
+            string subnet = ipAddress.Substring(0, ipAddress.LastIndexOf('.')+ 1);
+            Console.WriteLine(subnet);
 
-
-            for (int i = 1; i <= 255; i++) // Scanning IPs from 192.168.1.1 to 192.168.1.255
+            for (int i = 2; i <= 255; i++) // Scanning IPs from 192.168.0.1 to 192.168.0.255
             {
+                
                
                 try
                 {

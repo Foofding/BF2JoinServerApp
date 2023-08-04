@@ -15,21 +15,25 @@ namespace BF2JoinServerApp.Services
 
         public void CreateProfile(string profileName)
         {
+            _profileRepository.CreateProfile(profileName);
         }
 
-        public void DeleteProfile(string profileName)
+        public void DeleteProfile(string profileFolderName)
         {
+            _profileRepository.DeleteProfile(profileFolderName);
         }
 
-        public void RenameProfile(string profileName)
+        public void RenameProfile(string profileFolderName, string newName)
         {
+            _profileRepository.RenameProfile(profileFolderName, newName);
         }
 
-        public void ChangeProfile(string profileName)
+        public void CopyProfile(string profileFolderName)
         {
+            _profileRepository.CopyProfile(profileFolderName);
         }
 
-        public List<Profile> GetProfiles()
+        public Dictionary<string, Profile> GetProfiles()
         {
             return _profileRepository.LoadProfiles();
         }

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:BF2JoinServerApp"
         mc:Ignorable="d"
         Title="BF2 Local Servers" Height="550" Width="450" 
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Padding="0">
 
     <Window.Resources>
         <!--ListView Style-->
@@ -15,14 +16,21 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
             <Setter Property="Background" Value="#FF86A4B6"/>
+            <Setter Property="TextBlock.TextAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="0"/>
         </Style>
         <!--ListViewItem Style-->
         <Style TargetType="ListViewItem">
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
-
         </Style>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property=""
+            
+        </Style>
+        
         <!--Button Style-->
         <Style TargetType="Button">
             <Setter Property="FontWeight" Value="Bold"/>
@@ -40,22 +48,31 @@
             <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <ListView x:Name="ProfileListView"  Grid.Row="1" Margin="20, 0, 20, 10" Opacity="0.9" Background="#FFF2FFFF" FontSize="20" >
-            <ListView.View>
+        <Button Grid.Row="0" HorizontalAlignment="Left" Width="410" Height="50" Margin="20,0,0,0" Content="Settings">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFD12807" Offset="0.91"/>
+                    <GradientStop Color="#FFEB2D04" Offset="0.662"/>
+                    <GradientStop Color="#FF9A240E" Offset="0.991"/>
+                    <GradientStop Color="#FF66160C" Offset="0"/>
+                    <GradientStop Color="#FFB02710" Offset="0.333"/>
+                    <GradientStop Color="#FFE72801" Offset="0.598"/>
+                    <GradientStop Color="#FFE12901" Offset="0.748"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <ListView x:Name="ProfileListView"  Grid.Row="1" Margin="20, 0, 20, 10" Opacity="0.9" Background="#FFF2FFFF" FontSize="20" Width="410" Grid.Column="2" HorizontalAlignment="Center" Height="340">
+            <ListView.View >
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Battlefield 2 Profile List">
-                    <GridView.Columns>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Profiles" Width="200"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding PlayTime}" Header="Playtime" Width="auto"/>
-
-
-
+                    <GridView.Columns >
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Profiles" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding PlayTime}" Header="Playtime" Width="100"/>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
 
         </ListView>
-        <Button x:Name="HostButton"  Grid.Row="1" Margin="20,356,236,24" FontSize="24" Click="HostButton_Click" Grid.RowSpan="2">
+        <Button x:Name="HostButton"  Grid.Row="2" FontSize="24" Click="HostButton_Click" Height="70" Width="190" HorizontalAlignment="Left" Margin="20, 0,0,0" Padding="0">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD12807" Offset="0.91"/>
@@ -68,9 +85,9 @@
                 </LinearGradientBrush>
             </Button.Background> Host
         </Button>
-        <Button Margin="236,356,20,24" Grid.Row="1"  FontSize="24" Grid.RowSpan="2">
+        <Button  Grid.Row="2"  FontSize="24" Height="70" Width="190" HorizontalAlignment="right" Margin="0,0,20,0" Padding="0">
             <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" >
                     <GradientStop Color="#FFD12807" Offset="0.91"/>
                     <GradientStop Color="#FFEB2D04" Offset="0.662"/>
                     <GradientStop Color="#FF9A240E" Offset="0.991"/>

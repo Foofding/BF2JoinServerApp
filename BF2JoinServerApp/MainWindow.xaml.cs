@@ -28,6 +28,7 @@ namespace BF2JoinServerApp
             InitializeComponent();
 
             ProfileListView.ItemsSource = Profile.GetProfiles();
+            ProfileListView.HorizontalAlignment = HorizontalAlignment.Left;
         }
 
         private void HostButton_Click(object sender, RoutedEventArgs e)
@@ -66,6 +67,10 @@ namespace BF2JoinServerApp
                 new Profile("Shed5", 120),
                 new Profile("Shed6", 120),
                 new Profile("Shed7", 120),
+                new Profile("Shed8", 120),
+                new Profile("Shed9", 120),
+                new Profile("Shed9", 120),
+                new Profile("Shed9", 120),
             };
         }
     }

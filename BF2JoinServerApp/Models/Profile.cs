@@ -2,13 +2,17 @@
 {
     public class Profile
     {
-        public Profile(string name, int playTime)
+        public Profile(string name, string nick, int totalPlayTime, int numTimesLoggedIn)
         {
             this.Name = name;
-            this.PlayTime = playTime;
+            this.Nick = nick;
+            this.TotalPlayedTime = totalPlayTime;
+            this.NumTimesLoggedIn = numTimesLoggedIn;
         }
 
         public string Name { get; set; }
-        public int PlayTime { get; set; }
+        public string Nick { get; set; }
+        public int TotalPlayedTime { get; set; }
+        public int NumTimesLoggedIn { get; set; }
     }
 }

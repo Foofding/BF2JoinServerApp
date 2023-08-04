@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\William\\Repositories\\GIT\\BF2JoinServerApp\\BF2JoinServerApp\\BF2JoinServerApp.csproj": {}
+    "C:\\Users\\tobyr\\source\\repos\\BF2JoinServerApp\\BF2JoinServerApp\\BF2JoinServerApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\William\\Repositories\\GIT\\BF2JoinServerApp\\BF2JoinServerApp\\BF2JoinServerApp.csproj": {
+    "C:\\Users\\tobyr\\source\\repos\\BF2JoinServerApp\\BF2JoinServerApp\\BF2JoinServerApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\William\\Repositories\\GIT\\BF2JoinServerApp\\BF2JoinServerApp\\BF2JoinServerApp.csproj",
+        "projectUniqueName": "C:\\Users\\tobyr\\source\\repos\\BF2JoinServerApp\\BF2JoinServerApp\\BF2JoinServerApp.csproj",
         "projectName": "BF2JoinServerApp",
-        "projectPath": "C:\\Users\\William\\Repositories\\GIT\\BF2JoinServerApp\\BF2JoinServerApp\\BF2JoinServerApp.csproj",
-        "packagesPath": "C:\\Users\\William\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\William\\Repositories\\GIT\\BF2JoinServerApp\\BF2JoinServerApp\\obj\\",
+        "projectPath": "C:\\Users\\tobyr\\source\\repos\\BF2JoinServerApp\\BF2JoinServerApp\\BF2JoinServerApp.csproj",
+        "packagesPath": "C:\\Users\\tobyr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tobyr\\source\\repos\\BF2JoinServerApp\\BF2JoinServerApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\William\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tobyr\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0-windows7.0"
+          "net6.0-windows"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -45,7 +45,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -57,7 +58,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

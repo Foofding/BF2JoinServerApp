@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace BF2JoinServerApp
 {
@@ -8,6 +9,7 @@ namespace BF2JoinServerApp
     public partial class MainWindow : Window
     {
         private Game _game;
+
 
         public MainWindow()
         {
@@ -28,9 +30,18 @@ namespace BF2JoinServerApp
         {
             GameConnectorService gameConnector = new GameConnectorService();
             gameConnector.HostGame();
-            //"+modPath mods/bf2all64"
+           
             gameConnector.LaunchGame(_game.ExecutablePath, _game.DirectoryPath, " +modPath mods/bf2all64 +joinServer 192.168.0.116 +playerName COPYTEST1");
 
+        }
+
+        private void JoinButton_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            GameConnectorService gameConnector = new GameConnectorService();
+           
+            gameConnector.HostIP = gameConnector.JoinGame();
+
+            gameConnector.LaunchGame(_game.ExecutablePath, _game.DirectoryPath, $" +modPath mods/bf2all64 +joinServer {gameConnector.HostIP} +playerName COPYTEST1");
         }
     }
 }

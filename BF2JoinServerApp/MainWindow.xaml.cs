@@ -12,6 +12,7 @@ namespace BF2JoinServerApp
         private GameRepository _gameRepository;
         private ProfileService _profileService;
 
+
         public MainWindow()
         {
             _gameRepository = new GameRepository();

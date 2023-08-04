@@ -18,7 +18,6 @@ C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-w
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\ref\BF2JoinServerApp.dll
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp.pdb
 C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp.genruntimeconfig.cache
-C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\refint\BF2JoinServerApp.dll
 C:\Users\William\Repositories\GIT\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp.csproj.AssemblyReference.cache
 C:\Users\William\Repositories\GIT\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\App.g.cs
 C:\Users\William\Repositories\GIT\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp_MarkupCompile.cache
@@ -40,3 +39,4 @@ C:\Users\William\Repositories\GIT\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\ne
 C:\Users\William\Repositories\GIT\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp.AssemblyInfo.cs
 C:\Users\William\Repositories\GIT\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp.csproj.CoreCompileInputs.cache
 C:\Users\William\Repositories\GIT\BF2JoinServerApp\BF2JoinServerApp\obj\Debug\net6.0-windows\BF2JoinServerApp.genruntimeconfig.cache
+C:\Users\tobyr\source\repos\BF2JoinServerApp\BF2JoinServerApp\bin\Debug\net6.0-windows\ref\BF2JoinServerApp.dll

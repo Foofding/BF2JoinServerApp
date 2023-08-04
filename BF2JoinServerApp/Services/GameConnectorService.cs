@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
 
@@ -18,10 +19,20 @@ namespace BF2JoinServerApp
 
         public string JoinGame()
         {
+            // Get the host name of the local machine
+
+
+            string hostName = Dns.GetHostName();
+            Console.WriteLine(hostName);
+
+            // Get the IP from GetHostByName method of dns class.
+            string ipAddress = Dns.GetHostByName(hostName).AddressList[0].ToString();
+            string subnet = ipAddress.Substring(0, ipAddress.LastIndexOf('.'));
+
+
             for (int i = 1; i <= 255; i++) // Scanning IPs from 192.168.1.1 to 192.168.1.255
             {
-                string ipAddress = $"192.168.1.{i}";
-
+               
                 try
                 {
                     TcpClient client = new TcpClient();

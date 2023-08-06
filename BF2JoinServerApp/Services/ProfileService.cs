@@ -13,6 +13,15 @@ namespace BF2JoinServerApp.Services
         private ProfileRepository _profileRepository;
 
         /// <summary>
+        /// Constructor to initialize the ProfileService
+        /// </summary>
+        public ProfileService()
+        {
+            // Create a new instance of ProfileRepository
+            _profileRepository = new ProfileRepository(new ProfileFileFactory());
+        }
+
+        /// <summary>
         /// Gets and returns _profiles list
         /// </summary>
         /// <returns>Dictionary of profiles</returns>
@@ -28,15 +37,6 @@ namespace BF2JoinServerApp.Services
         public Dictionary<string, Profile> GetProfileFiles()
         {
             return _profileRepository.GetProfileFiles();
-        }
-
-        /// <summary>
-        /// Constructor to initialize the ProfileService
-        /// </summary>
-        public ProfileService()
-        {
-            // Create a new instance of ProfileRepository
-            _profileRepository = new ProfileRepository();
         }
 
         /// <summary>

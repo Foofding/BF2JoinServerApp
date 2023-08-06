@@ -35,9 +35,9 @@ namespace BF2JoinServerApp
 
             //_profileService.CreateProfile("NEW Created PLAYER Test!");
 
-            _profileService.RenameProfile("0008", "Changed name!");
+            //_profileService.RenameProfile("0008", "Changed name!");
 
-            InitializeComponent();
+            //InitializeComponent();
         }
 
         private void HostButton_Click(object sender, RoutedEventArgs e)

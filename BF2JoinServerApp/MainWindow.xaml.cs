@@ -47,6 +47,12 @@ namespace BF2JoinServerApp
             //"+modPath mods/bf2all64"
             gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), " +modPath mods/bf2all64 +joinServer 192.168.0.116 +playerName COPYTEST1");
         }
+
+        private void JoinButton_Click(object sender, RoutedEventArgs e)
+        {
+            GameConnectorService gameConnector = new GameConnectorService();
+            gameConnector.HostGame();
+        }
     }
 }
 

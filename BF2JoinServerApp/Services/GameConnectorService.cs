@@ -15,7 +15,7 @@ namespace BF2JoinServerApp
 {
     class GameConnectorService
     {
-        private int _port = 55552;
+        private int _port = 55551;
         public string HostIP { get; set; }
         private ManualResetEvent hostFoundEvent = new ManualResetEvent(false);
         private const int MaxThreads = 50;

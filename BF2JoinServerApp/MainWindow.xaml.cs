@@ -51,16 +51,20 @@ namespace BF2JoinServerApp
             Task.Factory.StartNew(() => { gameConnector.HostGame(); });
 
             //"+modPath mods/bf2all64"
-            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath());
+            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _LaunchArgs);
         }
 
         private void JoinButton_Click(object sender, RoutedEventArgs e)
         {
             GameConnectorService gameConnector = new GameConnectorService();
-            gameConnector.GetHostIP();
-            _LaunchArgs.Add("+joinServer " + gameConnector.HostIP);
-            MessageBox.Show(_LaunchArgs[1]);
-            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _LaunchArgs);
+            if (gameConnector.GetHostIP())
+            {
+                _LaunchArgs.Add("+joinServer " + gameConnector.HostIP);
+                MessageBox.Show(_LaunchArgs[1]);
+                gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _LaunchArgs);               
+            }
+            MessageBox.Show("Could not find host! \n\n 1. Check your firewall settings; Either make an exception for BF2JoinServerApp.exe or turn firewall off entirely. \n\n 2. Make sure no other host has pressed the \"Host\" button. If they did, make them restart the app to close port.");
+            
         }
     }
 }

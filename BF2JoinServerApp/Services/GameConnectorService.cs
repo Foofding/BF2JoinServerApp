@@ -15,7 +15,7 @@ namespace BF2JoinServerApp
 {
     class GameConnectorService
     {
-        private int _port = 55551;
+        private int _port = 55552;
         public string HostIP { get; set; }
         private ManualResetEvent hostFoundEvent = new ManualResetEvent(false);
         private const int MaxThreads = 50;
@@ -162,7 +162,7 @@ namespace BF2JoinServerApp
                     Debug.WriteLine("Trying: " + address.ToString());
 
                     var result = client.BeginConnect(address, _port, null, null);
-                    var success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromMilliseconds(20), false);
+                    var success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromMilliseconds(100), false);
 
                     if (success)
                     {

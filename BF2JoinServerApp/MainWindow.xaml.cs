@@ -1,6 +1,9 @@
 ﻿using BF2JoinServerApp.Data;
 using BF2JoinServerApp.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace BF2JoinServerApp
 {
@@ -11,12 +14,13 @@ namespace BF2JoinServerApp
     {
         private GameRepository _gameRepository;
         private ProfileService _profileService;
-
+        private List<string> _LaunchArgs;
 
         public MainWindow()
         {
             _gameRepository = new GameRepository();
             _profileService = new ProfileService();
+            _LaunchArgs = new List<string> { " +modPath mods/bf2all64" };
 
             if (!_gameRepository.CheckInstallation())
             {
@@ -42,16 +46,21 @@ namespace BF2JoinServerApp
 
         private void HostButton_Click(object sender, RoutedEventArgs e)
         {
+
             GameConnectorService gameConnector = new GameConnectorService();
-            gameConnector.HostGame();
+            Task.Factory.StartNew(() => { gameConnector.HostGame(); });
+
             //"+modPath mods/bf2all64"
-            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), " +modPath mods/bf2all64 +joinServer 192.168.0.116 +playerName COPYTEST1");
+            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath());
         }
 
         private void JoinButton_Click(object sender, RoutedEventArgs e)
         {
             GameConnectorService gameConnector = new GameConnectorService();
-            gameConnector.HostGame();
+            gameConnector.GetHostIP();
+            _LaunchArgs.Add("+joinServer " + gameConnector.HostIP);
+            MessageBox.Show(_LaunchArgs[1]);
+            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _LaunchArgs);
         }
     }
 }

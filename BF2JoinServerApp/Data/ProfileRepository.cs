@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
+using System.Diagnostics;
 
 namespace BF2JoinServerApp.Data
 {
@@ -45,6 +46,20 @@ namespace BF2JoinServerApp.Data
         {
             return _profileFiles;
         }
+
+        public void SelectProfile(string priorProfile, string selectedProfile)
+        {
+            
+            if(!Directory.Exists(Path.Combine(_profilesDirectory, "ProfileTemp")))
+            {
+                Directory.CreateDirectory(Path.Combine(_profilesDirectory, "ProfileTemp"));
+            }
+           
+            string[] profileFolders = Directory.GetDirectories(_profilesDirectory);
+            foreach (string profileFolder in profileFolders) { Debug.WriteLine(profileFolder); }
+
+        }
+
 
         /// <summary>
         /// Creates new Profile with defaulted .con files
@@ -217,6 +232,7 @@ namespace BF2JoinServerApp.Data
                 if (File.Exists(profileConFile))
                 {
                     Profile profile = ReadProfileFromConFile(profileConFile);
+                    profile.FolderPath = folderName;
                     _profiles.Add(profile);
                     _profileFiles.Add(folderName, profile); // Add to the dictionary using the folder name as the key.
                 }
@@ -259,7 +275,7 @@ namespace BF2JoinServerApp.Data
                 }
             }
 
-            return new Profile(name, nick, totalPlayedTime, numTimesLoggedIn);
+            return new Profile(name, nick, totalPlayedTime, numTimesLoggedIn, null);
         }
 
         /// <summary>

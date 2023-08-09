@@ -1,6 +1,11 @@
 ﻿using BF2JoinServerApp.Data;
+using BF2JoinServerApp.Models;
 using BF2JoinServerApp.Services;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
@@ -14,23 +19,35 @@ namespace BF2JoinServerApp
     {
         private GameRepository _gameRepository;
         private ProfileService _profileService;
-        private List<string> _LaunchArgs;
+        private List<string> _launchArgs;
+        private Profile _firstProfile;
+        private Profile _selectedProfile;
+        private List<Profile> _profiles;
 
         public MainWindow()
         {
             _gameRepository = new GameRepository();
             _profileService = new ProfileService();
-            _LaunchArgs = new List<string> { " +modPath mods/bf2all64" };
+            _launchArgs = new List<string> { " +modPath mods/bf2all64" };
+            _profiles = _profileService.GetProfiles();
+
+
 
             if (!_gameRepository.CheckInstallation())
             {
                 // TODO: ERROR prompt needs to appear if BF2 directory isn't found
             }
 
-            InitializeComponent();
 
-            ProfileListView.ItemsSource = _profileService.GetProfiles();
+            InitializeComponent();
+            ProfileListView.ItemsSource = _profiles;
             ProfileListView.HorizontalAlignment = HorizontalAlignment.Left;
+            _firstProfile = _profiles.FirstOrDefault();
+            ProfileListView.SelectedItem = _firstProfile;
+
+           
+
+
 
             // TODO: Runetime error because Directory.CreateDirectory makes new profile folder read-only
             //_profileService.CopyProfile("0006");
@@ -51,7 +68,7 @@ namespace BF2JoinServerApp
             Task.Factory.StartNew(() => { gameConnector.HostGame(); });
 
             //"+modPath mods/bf2all64"
-            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _LaunchArgs);
+            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _launchArgs);
         }
 
         private void JoinButton_Click(object sender, RoutedEventArgs e)
@@ -65,9 +82,20 @@ namespace BF2JoinServerApp
                 return;
             }
 
-            _LaunchArgs.Add("+joinServer " + gameConnector.HostIP);
-            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _LaunchArgs);
+            _launchArgs.Add("+joinServer " + gameConnector.HostIP);
+            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _launchArgs);
 
+        }
+
+        private void ProfileListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Check if an item was selected
+            if (ProfileListView.SelectedItem != null && ProfileListView.SelectedItem != _firstProfile)
+            {
+                _selectedProfile = (Profile)ProfileListView.SelectedItem;
+                _profileService.SelectProfile(_firstProfile.FolderPath, _selectedProfile.FolderPath);
+              
+            }
         }
     }
 }

@@ -1,14 +1,9 @@
-﻿using BF2JoinServerApp.Data;
-using BF2JoinServerApp.Models;
+﻿using BF2JoinServerApp.Models;
 using BF2JoinServerApp.Services;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace BF2JoinServerApp
 {
@@ -66,7 +61,7 @@ namespace BF2JoinServerApp
             GameConnectorService gameConnector = new GameConnectorService();
             bool hostFound = gameConnector.GetHostIP();
 
-            if (!hostFound)              
+            if (!hostFound)
             {
                 MessageBox.Show("Could not find host! \n\n 1. Check your firewall settings; Either make an exception for BF2JoinServerApp.exe or turn firewall off entirely. \n\n 2. Make sure no other host has pressed the \"Host\" button. If they did, make them restart the app to close port.");
                 //return;

@@ -8,8 +8,8 @@
             this.Nick = nick;
             this.TotalPlayedTime = totalPlayTime;
             this.NumTimesLoggedIn = numTimesLoggedIn;
-            if(folderPath != null ) { this.FolderName = folderPath; }
-           
+            if (folderPath != null) { this.FolderName = folderPath; }
+
         }
 
         public string Name { get; set; }

@@ -1,12 +1,7 @@
 ﻿using BF2JoinServerApp.Models;
-using BF2JoinServerApp.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Diagnostics;
 
 namespace BF2JoinServerApp.Data
 {

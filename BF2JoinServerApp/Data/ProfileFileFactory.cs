@@ -1,23 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BF2JoinServerApp.Data
 {
     public class ProfileFileFactory
     {
-
-        /// <summary>
-        /// Creates Audio.con, Controls.con, General.con, Haptic.con, mapList.con, Profile.con, 
-        /// ServerSettings.con, and Video.con with their default contents
-        /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
         public void CreateDefaultProfileFiles(string profileFolderPath, string profileName)
         {
-            // Create Audio.con file
+            CreateAudioConFile(profileFolderPath);
+            CreateControlsConFile(profileFolderPath);
+            CreateGeneralConFile(profileFolderPath);
+            CreateHapticConFile(profileFolderPath);
+            CreateMapListConFile(profileFolderPath);
+            CreateProfileConFile(profileFolderPath, profileName);
+        }
+
+        private void WriteContentsToFile(string filePath, StringBuilder contents)
+        {
+            File.WriteAllText(filePath, contents.ToString());
+        }
+
+        private void CreateAudioConFile(string profileFolderPath)
+        {
             string audioConFilePath = Path.Combine(profileFolderPath, "Audio.con");
             StringBuilder audioConContents = new StringBuilder();
             audioConContents.AppendLine(@"AudioSettings.setVoipEnabled 1
@@ -33,10 +38,11 @@ AudioSettings.setMusicVolume 0.33
 AudioSettings.setHelpVoiceVolume 1
 AudioSettings.setEnglishOnlyVoices 0
 AudioSettings.setEnableEAX 1");
-
             WriteContentsToFile(audioConFilePath, audioConContents);
+        }
 
-            // Create Controls.con file
+        private void CreateControlsConFile(string profileFolderPath)
+        {
             string controlsFilePath = Path.Combine(profileFolderPath, "Controls.con");
             StringBuilder controlsContents = new StringBuilder();
             controlsContents.AppendLine(@"ControlMap.create InfantryPlayerInputControlMap
@@ -282,10 +288,11 @@ ControlMap.addKeyToTriggerMapping c_PIToggleCameraMode IDFKeyboard IDKey_C 10000
 ControlMap.addKeyToTriggerMapping c_PICrouch IDFKeyboard IDKey_LeftCtrl 0 0
 ControlMap.addAxisToTriggerMapping c_PINextItem -1 IDFMouse IDAxis_2 0
 ControlMap.addAxisToTriggerMapping -1 c_PIPrevItem IDFMouse IDAxis_2 0");
-
             WriteContentsToFile(controlsFilePath, controlsContents);
+        }
 
-            // Create General.con file
+        private void CreateGeneralConFile(string profileFolderPath)
+        {
             string generalFilePath = Path.Combine(profileFolderPath, "General.con");
             StringBuilder generalContents = new StringBuilder();
             generalContents.AppendLine(@"GeneralSettings.setSortOrder 0
@@ -316,11 +323,13 @@ GeneralSettings.setAutoReload 1
 GeneralSettings.setAutoReady 0
 GeneralSettings.setConnectionType 5
 GeneralSettings.setLCDDisplayModes 0");
-
             WriteContentsToFile(generalFilePath, generalContents);
+        }
 
-            // Create General.con file
-            string hapticFilePath = Path.Combine(profileFolderPath, "Haptic.con");
+        private void CreateHapticConFile(string profileFolderPath)
+        {
+            string hapticConFilePath = Path.Combine(profileFolderPath, "Haptic.con");
+            StringBuilder hapticConContents = new StringBuilder();
             StringBuilder hapticContents = new StringBuilder();
             hapticContents.AppendLine(@"rem -------------------------
 rem ---Force Cap Variables---
@@ -772,95 +781,27 @@ HapticSettings.addWeaponClassMap ahe_z10_gun 15
 HapticSettings.addWeaponClassMap ahe_havoc_gun 15
 HapticSettings.addWeaponClassMap ahe_ah1z_gun 15
 ");
+            WriteContentsToFile(hapticConFilePath, hapticConContents);
+        }
 
-            WriteContentsToFile(hapticFilePath, hapticContents);
+        private void CreateMapListConFile(string profileFolderPath)
+        {
+            string mapListConFilePath = Path.Combine(profileFolderPath, "mapList.con");
+            StringBuilder mapListConContents = new StringBuilder();
+            mapListConContents.AppendLine(@"maplist.append ""gulf_of_oman"" ""sp1"" 16");
+            WriteContentsToFile(mapListConFilePath, mapListConContents);
+        }
 
-            // Create mapList.con file
-            string mapListFilePath = Path.Combine(profileFolderPath, "mapList.con");
-            StringBuilder mapListContents = new StringBuilder();
-            mapListContents.AppendLine(@"maplist.append ""gulf_of_oman"" ""sp1"" 16");
-
-            WriteContentsToFile(mapListFilePath, mapListContents);
-
-            // Create Profile.con file
-            string profileFilePath = Path.Combine(profileFolderPath, "Profile.con");
-            StringBuilder profileContents = new StringBuilder();
-            profileContents.AppendLine($@"LocalProfile.setName ""{profileName}""
+        private void CreateProfileConFile(string profileFolderPath, string profileName)
+        {
+            string profileConFilePath = Path.Combine(profileFolderPath, "Profile.con");
+            StringBuilder profileConContents = new StringBuilder();
+            profileConContents.AppendLine($@"LocalProfile.setName ""{profileName}""
 LocalProfile.setNick ""{profileName}""
 LocalProfile.setGamespyNick """"
 LocalProfile.setTotalPlayedTime 0
 LocalProfile.setNumTimesLoggedIn 0");
-
-            WriteContentsToFile(profileFilePath, profileContents);
-
-            // Create ServerSettings.con file
-            string serverSettingsFilePath = Path.Combine(profileFolderPath, "ServerSettings.con");
-            StringBuilder serverSettingsContents = new StringBuilder();
-            serverSettingsContents.AppendLine(@"GameServerSettings.setServerName ""
-GameServerSettings.setPassword ""
-GameServerSettings.setInternet 0
-GameServerSettings.setMaxPlayers 16
-GameServerSettings.setSpawnTime 15
-GameServerSettings.setManDownTime 10
-GameServerSettings.setTicketRatio 200
-GameServerSettings.setRoundsPerMap 99
-GameServerSettings.setTimeLimit 0
-GameServerSettings.setScoreLimit 0
-GameServerSettings.setSoldierFF 100
-GameServerSettings.setVehicleFF 100
-GameServerSettings.setSoldierSplashFF 100
-GameServerSettings.setVehicleSplashFF 100
-GameServerSettings.setPunishTeamKills 1
-GameServerSettings.setVotingEnabled 1
-GameServerSettings.setVoteTime 60
-GameServerSettings.setMinPlayersForVoting 2
-GameServerSettings.setTeamVoteOnly 1
-GameServerSettings.setVoipEnabled 1
-GameServerSettings.setVoipQuality 5
-GameServerSettings.setVoipServerRemote 0
-GameServerSettings.setVoipServerRemoteIP 
-GameServerSettings.setVoipServerPort 55125
-GameServerSettings.setVoipBFClientPort 55123
-GameServerSettings.setVoipBFServerPort 55124
-GameServerSettings.setVoipSharedPassword 
-GameServerSettings.setAutoRecord 0
-GameServerSettings.setSvPunkBuster 0
-GameServerSettings.setTeamRatio 100
-GameServerSettings.setAutoBalanceTeam 1
-GameServerSettings.setFriendlyFireWithMines 103
-GameServerSettings.setCoopBotRatio 50
-GameServerSettings.setCoopBotCount 16
-GameServerSettings.setCoopBotDifficulty 50
-GameServerSettings.setNoVehicles 0
-");
-
-            WriteContentsToFile(serverSettingsFilePath, serverSettingsContents);
-
-            // Create Video.con file
-            string videoFilePath = Path.Combine(profileFolderPath, "Video.con");
-            StringBuilder VideoContents = new StringBuilder();
-            VideoContents.AppendLine(@"VideoSettings.setTerrainQuality 3
-VideoSettings.setGeometryQuality 3
-VideoSettings.setLightingQuality 3
-VideoSettings.setDynamicLightingQuality 3
-VideoSettings.setDynamicShadowsQuality 3
-VideoSettings.setEffectsQuality 3
-VideoSettings.setTextureQuality 3
-VideoSettings.setTextureFilteringQuality 3
-VideoSettings.setResolution 1920x1080@60Hz
-VideoSettings.setAntialiasing 8Samples
-VideoSettings.setViewDistanceScale 1
-VideoSettings.setVideoOptionScheme 3");
-
-            WriteContentsToFile(videoFilePath, VideoContents);
-        }
-
-        private void WriteContentsToFile(string filePath, StringBuilder contents)
-        {
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                writer.Write(contents);
-            }
+            WriteContentsToFile(profileConFilePath, profileConContents);
         }
     }
 }

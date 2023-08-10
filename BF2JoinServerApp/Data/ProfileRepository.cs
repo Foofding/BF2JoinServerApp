@@ -14,7 +14,7 @@ namespace BF2JoinServerApp.Data
     {
         private ProfileFileFactory _profileFileFactory;
         private Dictionary<string, Profile> _foldersAndProfiles;
-        private string _profilesDirectory;
+        private string _profilesDirectoryPath;
 
         /// <summary>
         /// Constructor
@@ -44,10 +44,10 @@ namespace BF2JoinServerApp.Data
         public void SelectProfile(string targetProfileFolder)
         {
             // Get the path of the current "0001" profile
-            string defaultProfilePath = Path.Combine(_profilesDirectory, "0001");
+            string defaultProfilePath = Path.Combine(_profilesDirectoryPath, "0001");
 
             // Get the path of the target profile
-            string targetProfilePath = Path.Combine(_profilesDirectory, targetProfileFolder);
+            string targetProfilePath = Path.Combine(_profilesDirectoryPath, targetProfileFolder);
 
             // Get the Windows temporary folder path
             string tempFolderPath = Path.GetTempPath();
@@ -77,7 +77,7 @@ namespace BF2JoinServerApp.Data
         /// <exception cref="DirectoryNotFoundException"></exception>
         public void CreateProfile(string profileName)
         {
-            if (!Directory.Exists(_profilesDirectory))
+            if (!Directory.Exists(_profilesDirectoryPath))
             {
                 throw new DirectoryNotFoundException("Profiles directory does not exist.");
             }
@@ -97,7 +97,7 @@ namespace BF2JoinServerApp.Data
 
             // Create the new profile folder and copy its contents
             string newProfileFolderName = newProfileNumber.ToString("D4"); // Formats to 4 digits with leading zeros
-            string newProfileFolderPath = Path.Combine(_profilesDirectory, newProfileFolderName);
+            string newProfileFolderPath = Path.Combine(_profilesDirectoryPath, newProfileFolderName);
             Directory.CreateDirectory(newProfileFolderPath);
 
             // Creating default .con files
@@ -115,17 +115,17 @@ namespace BF2JoinServerApp.Data
         /// <exception cref="DirectoryNotFoundException"></exception>
         public void DeleteProfile(string profileFolderName)
         {
-            if (!Directory.Exists(_profilesDirectory))
+            if (!Directory.Exists(_profilesDirectoryPath))
             {
                 throw new DirectoryNotFoundException("Profiles directory does not exist.");
             }
-            else if (!Directory.Exists(_profilesDirectory + "\\" + profileFolderName))
+            else if (!Directory.Exists(_profilesDirectoryPath + "\\" + profileFolderName))
             {
                 throw new DirectoryNotFoundException($"Profile {profileFolderName} does not exist.");
             }
             else
             {
-                Directory.Delete(_profilesDirectory + "\\" + profileFolderName, true);
+                Directory.Delete(_profilesDirectoryPath + "\\" + profileFolderName, true);
             }
 
             // Update the profile in the profiles list and dict
@@ -140,7 +140,8 @@ namespace BF2JoinServerApp.Data
         /// <exception cref="DirectoryNotFoundException"></exception>
         public void RenameProfile(string profileFolderName, string newName)
         {
-            string profileFolderPath = Path.Combine(_profilesDirectory, profileFolderName);
+            // Combining to acquire full path
+            string profileFolderPath = Path.Combine(_profilesDirectoryPath, profileFolderName);
 
             if (!Directory.Exists(profileFolderPath))
             {
@@ -165,7 +166,9 @@ namespace BF2JoinServerApp.Data
         /// <exception cref="ArgumentException"></exception>
         public void CopyProfile(string sourceProfileNumber)
         {
-            if (!Directory.Exists(_profilesDirectory))
+            string sourceProfileDirectoryPath = Path.Combine(_profilesDirectoryPath, sourceProfileNumber);
+
+            if (!Directory.Exists(_profilesDirectoryPath))
             {
                 throw new DirectoryNotFoundException("Profiles directory does not exist.");
             }
@@ -188,29 +191,34 @@ namespace BF2JoinServerApp.Data
             // Create the new profile number
             int newProfileNumber = highestProfileNumber + 1;
 
-            // Create the new profile folder and copy its contents
             string newProfileFolderName = newProfileNumber.ToString("D4"); // Formats to 4 digits with leading zeros
-            string newProfileFolderPath = Path.Combine(_profilesDirectory, newProfileFolderName);
+            // Create the new profile folder in Windows temp directory
+            string tempProfileFolderPath = Path.Combine(Path.GetTempPath(), newProfileFolderName);
 
-            Directory.CreateDirectory(newProfileFolderPath);
+            Directory.CreateDirectory(tempProfileFolderPath);
 
             try
             {
-                string[] files = Directory.GetFiles(_profilesDirectory);
+                string[] files = Directory.GetFiles(sourceProfileDirectoryPath, "*.con");
                 foreach (string file in files)
                 {
                     string fileName = Path.GetFileName(file);
-                    string destinationFilePath = Path.Combine(newProfileFolderPath, fileName);
+                    string destinationFilePath = Path.Combine(tempProfileFolderPath, fileName);
                     File.Copy(file, destinationFilePath);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred while copying profile files: " + ex.Message);
+                return;
             }
 
+            // Move the new profile folder to the Profiles directory
+            string finalProfileFolderPath = Path.Combine(_profilesDirectoryPath, newProfileFolderName);
+            Directory.Move(tempProfileFolderPath, finalProfileFolderPath);
+
             // Update the LocalProfile.setName in Profile.con
-            UpdateProfileNameInConFile(newProfileFolderPath, sourceProfile.Name + " Copy");
+            RenameProfile(finalProfileFolderPath, sourceProfile.Name + " Copy");
 
             // Update the profile in the profiles list and dict
             LoadProfiles();
@@ -224,12 +232,12 @@ namespace BF2JoinServerApp.Data
 
         public Dictionary<string, Profile>? LoadProfiles()
         {
-            if (!Directory.Exists(_profilesDirectory))
+            if (!Directory.Exists(_profilesDirectoryPath))
             {
                 throw new DirectoryNotFoundException("Profiles directory does not exist.");
             }
 
-            string[] profileFolders = Directory.GetDirectories(_profilesDirectory);
+            string[] profileFolders = Directory.GetDirectories(_profilesDirectoryPath);
 
             _foldersAndProfiles.Clear();
 
@@ -292,7 +300,7 @@ namespace BF2JoinServerApp.Data
         {
             string documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string remainingPath = "Battlefield 2\\Profiles";
-            _profilesDirectory = Path.Combine(documentsFolder, remainingPath);
+            _profilesDirectoryPath = Path.Combine(documentsFolder, remainingPath);
         }
 
         /// <summary>

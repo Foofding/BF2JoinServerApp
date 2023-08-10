@@ -21,9 +21,15 @@ namespace BF2JoinServerApp.Services
             _profileRepository = new ProfileRepository(new ProfileFileFactory());
         }
 
-        public void SelectProfile(string priorProfileFolder, string selectedProfileFolder)
+
+        /// <summary>
+        /// Takes in targetProfileFolder and renames it too 0001 and sets the original 0001
+        /// to targetProfileFolder's original folder name
+        /// </summary>
+        /// <param name="targetProfileFolder"></param>
+        public void SelectProfile(string targetProfileFolder)
         {
-            _profileRepository.SelectProfile(priorProfileFolder, selectedProfileFolder);
+            _profileRepository.SelectProfile(targetProfileFolder);
         }
 
         /// <summary>

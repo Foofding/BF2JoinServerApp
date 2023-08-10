@@ -39,7 +39,8 @@ namespace BF2JoinServerApp.Data
         }
 
         /// <summary>
-        /// Gets and returns _profileFiles dict
+        /// Takes in targetProfileFolder and renames it too 0001 and sets the original 0001
+        /// to targetProfileFolder's original folder name
         /// </summary>
         /// <returns>Dictionary of profiles</returns>
         public Dictionary<string, Profile> GetProfileFiles()
@@ -47,17 +48,40 @@ namespace BF2JoinServerApp.Data
             return _profileFiles;
         }
 
-        public void SelectProfile(string priorProfile, string selectedProfile)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetProfileFolder"></param>
+        public void SelectProfile(string targetProfileFolder)
         {
-            
-            if(!Directory.Exists(Path.Combine(_profilesDirectory, "ProfileTemp")))
+            // Check if "temp" directory exists
+            string tempProfilePath = Path.Combine(_profilesDirectory, "ProfileTemp");
+            if (!Directory.Exists(tempProfilePath))
             {
-                Directory.CreateDirectory(Path.Combine(_profilesDirectory, "ProfileTemp"));
+                Directory.CreateDirectory(tempProfilePath);
             }
-           
-            string[] profileFolders = Directory.GetDirectories(_profilesDirectory);
-            foreach (string profileFolder in profileFolders) { Debug.WriteLine(profileFolder); }
 
+            // Get the path of the current "0001" profile
+            string defaultProfilePath = Path.Combine(_profilesDirectory, "0001");
+
+            // Get the path of the target profile
+            string targetProfilePath = Path.Combine(_profilesDirectory, targetProfileFolder);
+
+            // Rename the target profile to "temp"
+            string tempProfileTempPath = Path.Combine(_profilesDirectory, "ProfileTemp");
+            Directory.Move(targetProfilePath, tempProfileTempPath);
+
+            // Rename "0001" to the target profile's folder name
+            Directory.Move(defaultProfilePath, targetProfilePath);
+
+            // Rename the "temp" profile (which was originally the target) to "0001"
+            Directory.Move(tempProfileTempPath, defaultProfilePath);
+
+            // Delete the temporary "ProfileTemp" folder
+            Directory.Delete(tempProfilePath, true);
+
+            // Update the profile in the profiles list and dictionary
+            LoadProfiles();
         }
 
 

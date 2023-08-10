@@ -45,16 +45,22 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="ProfileListView"  Grid.Row="0" Margin="20, 0, 20, 10" Opacity="0.9" Background="#FFF2FFFF" FontSize="20" Width="410" Grid.Column="2" HorizontalAlignment="Center" Height="360"
-                  SelectionChanged="ProfileListView_SelectionChanged">
+        <ListView x:Name="ProfileListView" Grid.Row="0" Margin="20, 0, 20, 10" Opacity="0.9" Background="#FFF2FFFF" FontSize="20" Width="410" Grid.Column="2" HorizontalAlignment="Center" Height="360"
+          SelectionChanged="ProfileListView_SelectionChanged">
             <ListView.View >
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Battlefield 2 Profile List">
                     <GridView.Columns >
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Profiles" Width="280"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding PlayTime}" Header="Playtime" Width="100"/>
+                        <GridViewColumn Header="Profiles" Width="280">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Value.Name}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Value.PlayTime}" Header="Playtime" Width="100"/>
                     </GridView.Columns>
-                </GridView>                
-            </ListView.View>           
+                </GridView>
+            </ListView.View>
         </ListView>
 
         <Button x:Name="HostButton" Grid.Row="1" FontSize="24" Click="HostButton_Click" Height="70" Width="190" HorizontalAlignment="Left" Margin="20, 0,0,30" Padding="0">

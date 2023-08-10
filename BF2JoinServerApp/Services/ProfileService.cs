@@ -33,21 +33,22 @@ namespace BF2JoinServerApp.Services
         }
 
         /// <summary>
-        /// Gets and returns _profiles list
+        /// Gets and returns profiles list from _profileFiles
         /// </summary>
         /// <returns>Dictionary of profiles</returns>
         public List<Profile> GetProfiles()
         {
-            return _profileRepository.GetProfiles();
+            List<Profile> profiles = new List<Profile>(_profileRepository.GetFoldersAndProfiles().Values);
+            return profiles;
         }
 
         /// <summary>
         /// Gets and returns _profileFiles dict
         /// </summary>
         /// <returns>Dictionary of profiles</returns>
-        public Dictionary<string, Profile> GetProfileFiles()
+        public Dictionary<string, Profile> GetFoldersAndProfiles()
         {
-            return _profileRepository.GetProfileFiles();
+            return _profileRepository.GetFoldersAndProfiles();
         }
 
         /// <summary>

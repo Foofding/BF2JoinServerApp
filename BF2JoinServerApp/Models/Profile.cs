@@ -8,7 +8,7 @@
             this.Nick = nick;
             this.TotalPlayedTime = totalPlayTime;
             this.NumTimesLoggedIn = numTimesLoggedIn;
-            if(folderPath != null ) { this.FolderPath = folderPath; }
+            if(folderPath != null ) { this.FolderName = folderPath; }
            
         }
 
@@ -17,6 +17,6 @@
         public int TotalPlayedTime { get; set; }
         public int NumTimesLoggedIn { get; set; }
 
-        public string? FolderPath { get; set; }
+        public string? FolderName { get; set; }
     }
 }

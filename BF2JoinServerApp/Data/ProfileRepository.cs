@@ -13,8 +13,7 @@ namespace BF2JoinServerApp.Data
     public class ProfileRepository
     {
         private ProfileFileFactory _profileFileFactory;
-        private Dictionary<string, Profile> _profileFiles;
-        private List<Profile> _profiles;
+        private Dictionary<string, Profile> _foldersAndProfiles;
         private string _profilesDirectory;
 
         /// <summary>
@@ -23,66 +22,52 @@ namespace BF2JoinServerApp.Data
         public ProfileRepository(ProfileFileFactory profileFileFactory)
         {
             _profileFileFactory = profileFileFactory;
-            _profileFiles = new Dictionary<string, Profile>();
-            _profiles = new List<Profile>();
+            _foldersAndProfiles = new Dictionary<string, Profile>();
             GetProfilesDirectory();
             LoadProfiles();
         }
 
         /// <summary>
-        /// Gets and returns _profiles list
+        /// Gets and returns _profilesFiles dict 
         /// </summary>
         /// <returns>Dictionary of profiles</returns>
-        public List<Profile> GetProfiles()
+        public Dictionary<string, Profile> GetFoldersAndProfiles()
         {
-            return _profiles;
+            return _foldersAndProfiles;
         }
 
         /// <summary>
         /// Takes in targetProfileFolder and renames it too 0001 and sets the original 0001
         /// to targetProfileFolder's original folder name
         /// </summary>
-        /// <returns>Dictionary of profiles</returns>
-        public Dictionary<string, Profile> GetProfileFiles()
-        {
-            return _profileFiles;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="targetProfileFolder"></param>
         public void SelectProfile(string targetProfileFolder)
         {
-            // Check if "temp" directory exists
-            string tempProfilePath = Path.Combine(_profilesDirectory, "ProfileTemp");
-            if (!Directory.Exists(tempProfilePath))
-            {
-                Directory.CreateDirectory(tempProfilePath);
-            }
-
             // Get the path of the current "0001" profile
             string defaultProfilePath = Path.Combine(_profilesDirectory, "0001");
 
             // Get the path of the target profile
             string targetProfilePath = Path.Combine(_profilesDirectory, targetProfileFolder);
 
-            // Rename the target profile to "temp"
-            string tempProfileTempPath = Path.Combine(_profilesDirectory, "ProfileTemp");
-            Directory.Move(targetProfilePath, tempProfileTempPath);
+            // Get the Windows temporary folder path
+            string tempFolderPath = Path.GetTempPath();
+
+            // Create a temporary path for the target profile
+            string tempTargetProfilePath = Path.Combine(tempFolderPath, "BF2ProfileTargetTemp");
+
+            // Rename the target profile to the temporary target path
+            Directory.Move(targetProfilePath, tempTargetProfilePath);
 
             // Rename "0001" to the target profile's folder name
             Directory.Move(defaultProfilePath, targetProfilePath);
 
-            // Rename the "temp" profile (which was originally the target) to "0001"
-            Directory.Move(tempProfileTempPath, defaultProfilePath);
-
-            // Delete the temporary "ProfileTemp" folder
-            Directory.Delete(tempProfilePath, true);
+            // Rename the temporary target path to "0001"
+            Directory.Move(tempTargetProfilePath, defaultProfilePath);
 
             // Update the profile in the profiles list and dictionary
             LoadProfiles();
         }
+
 
 
         /// <summary>
@@ -99,7 +84,7 @@ namespace BF2JoinServerApp.Data
 
             // Find the highest profile number from existing profiles
             int highestProfileNumber = 0;
-            foreach (string folderName in _profileFiles.Keys)
+            foreach (string folderName in _foldersAndProfiles.Keys)
             {
                 if (int.TryParse(folderName, out int profileNumber))
                 {
@@ -185,14 +170,14 @@ namespace BF2JoinServerApp.Data
                 throw new DirectoryNotFoundException("Profiles directory does not exist.");
             }
 
-            if (!_profileFiles.TryGetValue(sourceProfileNumber, out Profile sourceProfile))
+            if (!_foldersAndProfiles.TryGetValue(sourceProfileNumber, out Profile sourceProfile))
             {
                 throw new ArgumentException($"Profile folder '{sourceProfileNumber}' not found.", nameof(sourceProfileNumber));
             }
 
             // Find the highest profile number from existing profiles
             int highestProfileNumber = 0;
-            foreach (string folderName in _profileFiles.Keys)
+            foreach (string folderName in _foldersAndProfiles.Keys)
             {
                 if (int.TryParse(folderName, out int profileNumber))
                 {
@@ -246,8 +231,7 @@ namespace BF2JoinServerApp.Data
 
             string[] profileFolders = Directory.GetDirectories(_profilesDirectory);
 
-            _profiles.Clear();
-            _profileFiles.Clear();
+            _foldersAndProfiles.Clear();
 
             foreach (string profileFolder in profileFolders)
             {
@@ -256,13 +240,12 @@ namespace BF2JoinServerApp.Data
                 if (File.Exists(profileConFile))
                 {
                     Profile profile = ReadProfileFromConFile(profileConFile);
-                    profile.FolderPath = folderName;
-                    _profiles.Add(profile);
-                    _profileFiles.Add(folderName, profile); // Add to the dictionary using the folder name as the key.
+                    profile.FolderName = folderName;
+                    _foldersAndProfiles.Add(folderName, profile); // Add to the dictionary using the folder name as the key.
                 }
             }
 
-            return _profileFiles;
+            return _foldersAndProfiles;
         }
 
         /// <summary>

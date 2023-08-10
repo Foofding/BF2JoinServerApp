@@ -34,10 +34,21 @@ namespace BF2JoinServerApp
 
             ProfileListView.ItemsSource = _profileService.GetFoldersAndProfiles();
             ProfileListView.HorizontalAlignment = HorizontalAlignment.Left;
+        }
 
-            _profileService.CopyProfile("0005");
+        private void RenameButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Handle the Rename button click here
+        }
 
-            Console.WriteLine("");
+        private void CopyButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Handle the Copy button click here
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Handle the Delete button click here
         }
 
         private void HostButton_Click(object sender, RoutedEventArgs e)

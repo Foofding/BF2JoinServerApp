@@ -17,7 +17,7 @@ namespace BF2JoinServerApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GameRepository _gameRepository = new GameRepository();
+        private GameService _gameService = new GameService();
         private ProfileService _profileService = new ProfileService();
         private List<string> _launchArgs = new List<string> { " +modPath mods/bf2all64" };
         private Dictionary<string, Profile> _profileFiles;
@@ -43,7 +43,7 @@ namespace BF2JoinServerApp
             Task.Factory.StartNew(() => { gameConnector.HostGame(); });
 
             //"+modPath mods/bf2all64"
-            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _launchArgs);
+            gameConnector.LaunchGame(_gameService.GetExecutablePath(), _gameService.GetDirectoryPath(), _launchArgs);
         }
 
         private void JoinButton_Click(object sender, RoutedEventArgs e)
@@ -62,7 +62,7 @@ namespace BF2JoinServerApp
 
             // Specifiying host's ip in launch args
             _launchArgs.Add("+joinServer " + gameConnector.HostIP);
-            gameConnector.LaunchGame(_gameRepository.GetExecutablePath(), _gameRepository.GetDirectoryPath(), _launchArgs);
+            gameConnector.LaunchGame(_gameService.GetExecutablePath(), _gameService.GetDirectoryPath(), _launchArgs);
 
         }
 

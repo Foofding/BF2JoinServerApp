@@ -6,9 +6,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+
 
 namespace BF2JoinServerApp
 {
@@ -32,23 +37,70 @@ namespace BF2JoinServerApp
 
             InitializeComponent();
 
-            ProfileListView.ItemsSource = _profileService.GetFoldersAndProfiles();
+            ProfileListView.ItemsSource = _profileFiles;
             ProfileListView.HorizontalAlignment = HorizontalAlignment.Left;
+            ProfileListView.PreviewMouseRightButtonDown += ListView_PreviewMouseRightButtonDown;
+        }
+        private void ListView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ListViewItem item = FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+
+            if (item != null)
+            {
+
+                _selectedProfile = (KeyValuePair<string, Profile>)item.Content;
+
+                item.IsSelected = true;                
+                // Create a new context menu for this item
+                ContextMenu itemContextMenu = new ContextMenu();
+
+                // Add menu items for this item
+                MenuItem renameMenuItem = new MenuItem();
+                renameMenuItem.Header = "Rename";
+                renameMenuItem.Click += (s, args) => { /* Handle edit action */ };
+                itemContextMenu.Items.Add(renameMenuItem);
+
+                MenuItem CopyMenuItem = new MenuItem();
+                CopyMenuItem.Header = "Copy";
+                CopyMenuItem.Click +=  (s, args) =>
+                {
+                   _profileService.CopyProfile(_selectedProfile.Key);
+                   _profileFiles = _profileService.GetFoldersAndProfiles();                   
+                   ProfileListView.Items.Refresh();
+                };
+
+                itemContextMenu.Items.Add(CopyMenuItem);
+
+                MenuItem deleteMenuItem = new MenuItem();
+                deleteMenuItem.Header = "Delete";
+                deleteMenuItem.Click += (s, args) =>
+                    {
+                        _profileService.DeleteProfile(_selectedProfile.Key);
+                        ProfileListView.Items.Refresh();
+                    };
+
+                itemContextMenu.Items.Add(deleteMenuItem);
+
+                // Set the context menu for this item
+                item.ContextMenu = itemContextMenu;
+
+                // Open the context menu
+                itemContextMenu.IsOpen = true;
+            }
+
         }
 
-        private void RenameButton_Click(object sender, RoutedEventArgs e)
+        private static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
         {
-            // Handle the Rename button click here
-        }
-
-        private void CopyButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Handle the Copy button click here
-        }
-
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Handle the Delete button click here
+            do
+            {
+                if (current is T ancestor)
+                {
+                    return ancestor;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            } while (current != null);
+            return null;
         }
 
         private void HostButton_Click(object sender, RoutedEventArgs e)

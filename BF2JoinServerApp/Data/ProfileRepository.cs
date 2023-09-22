@@ -68,8 +68,6 @@ namespace BF2JoinServerApp.Data
             LoadProfiles();
         }
 
-
-
         /// <summary>
         /// Creates new Profile with defaulted .con files
         /// </summary>

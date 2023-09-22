@@ -83,21 +83,9 @@ namespace BF2JoinServerApp.Data
             }
 
             // Find the highest profile number from existing profiles
-            int highestProfileNumber = 0;
-            foreach (string folderName in _foldersAndProfiles.Keys)
-            {
-                if (int.TryParse(folderName, out int profileNumber))
-                {
-                    highestProfileNumber = Math.Max(highestProfileNumber, profileNumber);
-                }
-            }
+            string firstAvailableFormattedProfileName = FindFirstFormattedProfileName();  
 
-            // Create the new profile number
-            int newProfileNumber = highestProfileNumber + 1;
-
-            // Create the new profile folder and copy its contents
-            string newProfileFolderName = newProfileNumber.ToString("D4"); // Formats to 4 digits with leading zeros
-            string newProfileFolderPath = Path.Combine(_profilesDirectoryPath, newProfileFolderName);
+            string newProfileFolderPath = Path.Combine(_profilesDirectoryPath, firstAvailableFormattedProfileName);
             Directory.CreateDirectory(newProfileFolderPath);
 
             // Creating default .con files
@@ -178,23 +166,10 @@ namespace BF2JoinServerApp.Data
                 throw new ArgumentException($"Profile folder '{sourceProfileNumber}' not found.", nameof(sourceProfileNumber));
             }
 
-            // Find the highest profile number from existing profiles
-            int highestProfileNumber = 0;
-            foreach (string folderName in _foldersAndProfiles.Keys)
-            {
-                if (int.TryParse(folderName, out int profileNumber))
-                {
-                    highestProfileNumber = Math.Max(highestProfileNumber, profileNumber);
-                }
-            }
-
-            // Create the new profile number
-            int newProfileNumber = highestProfileNumber + 1;
-
-            string newProfileFolderName = newProfileNumber.ToString("D4"); // Formats to 4 digits with leading zeros
+            string firstAvailableFormattedProfileNumber = FindFirstFormattedProfileName();
+            
             // Create the new profile folder in Windows temp directory
-            string tempProfileFolderPath = Path.Combine(Path.GetTempPath(), newProfileFolderName);
-
+            string tempProfileFolderPath = Path.Combine(Path.GetTempPath(), firstAvailableFormattedProfileNumber);
             Directory.CreateDirectory(tempProfileFolderPath);
 
             try
@@ -214,7 +189,7 @@ namespace BF2JoinServerApp.Data
             }
 
             // Move the new profile folder to the Profiles directory
-            string finalProfileFolderPath = Path.Combine(_profilesDirectoryPath, newProfileFolderName);
+            string finalProfileFolderPath = Path.Combine(_profilesDirectoryPath, firstAvailableFormattedProfileNumber);
             Directory.Move(tempProfileFolderPath, finalProfileFolderPath);
 
             // Update the LocalProfile.setName in Profile.con
@@ -326,6 +301,33 @@ namespace BF2JoinServerApp.Data
             }
 
             File.WriteAllLines(conFilePath, conFileLines);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private string FindFirstFormattedProfileName()
+        {
+            string? firstAvailableFormattedProfileNumber = null;
+
+            // Find the highest profile number from existing profiles
+            for (int i = 1; i <= 1000; i++)
+            {
+                string formattedNumber = i.ToString("D4");
+
+                if (_foldersAndProfiles.ContainsKey(formattedNumber))
+                    continue;
+                else
+                    firstAvailableFormattedProfileNumber = formattedNumber; break;
+            }
+
+            // Exception thrown if 0001 - 1000 is unavailable
+            if (firstAvailableFormattedProfileNumber == null)
+                throw new Exception("An error occurred while copying profile files: Profile limit (1000) reached");
+
+            return firstAvailableFormattedProfileNumber;
         }
     }
 }

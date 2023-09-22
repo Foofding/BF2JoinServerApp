@@ -41,6 +41,39 @@ namespace BF2JoinServerApp
             ProfileListView.HorizontalAlignment = HorizontalAlignment.Left;
             ProfileListView.PreviewMouseRightButtonDown += ListView_PreviewMouseRightButtonDown;
         }
+
+        private T FindVisualChild<T>(DependencyObject parent, string name) where T : FrameworkElement
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                if (child != null && child is T element && element.Name == name)
+                {
+                    return element;
+                }
+
+                T childOfChild = FindVisualChild<T>(child, name);
+                if (childOfChild != null)
+                {
+                    return childOfChild;
+                }
+            }
+            return null;
+        }
+
+        private static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            do
+            {
+                if (current is T ancestor)
+                {
+                    return ancestor;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            } while (current != null);
+            return null;
+        }
+
         private void ListView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             ListViewItem item = FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
@@ -50,23 +83,49 @@ namespace BF2JoinServerApp
 
                 _selectedProfile = (KeyValuePair<string, Profile>)item.Content;
 
-                item.IsSelected = true;                
+                item.IsSelected = true;
                 // Create a new context menu for this item
                 ContextMenu itemContextMenu = new ContextMenu();
 
                 // Add menu items for this item
                 MenuItem renameMenuItem = new MenuItem();
                 renameMenuItem.Header = "Rename";
-                renameMenuItem.Click += (s, args) => { /* Handle edit action */ };
+                renameMenuItem.Click += (s, args) =>
+                {
+
+                    TextBlock textBlockProfileName = FindVisualChild<TextBlock>(item, "TextBlockProfileName");
+                    TextBox textBoxProfileName = FindVisualChild<TextBox>(item, "TextBoxProfileName");
+
+                    textBlockProfileName.Visibility = Visibility.Collapsed;
+                    textBoxProfileName.Visibility = Visibility.Visible;
+                    textBoxProfileName.Focus();
+
+
+                    //// Create the custom dialog window and pass the current profile name
+                    //RenameProfileWindow renameWindow = new RenameProfileWindow(_selectedProfile.Key);
+
+                    //// Show the dialog as a modal window
+                    //if (renameWindow.ShowDialog() == true)
+                    //{
+                    //    // Get the new profile name from the dialog window
+                    //    string newProfileName = renameWindow.NewProfileName;
+
+                    //    // Update the profile name with the new value
+                    //    _profileService.RenameProfile(_selectedProfile.Key, newProfileName);
+
+                    //    // Refresh the ListView or update the UI as needed
+                    //    ProfileListView.Items.Refresh();
+                    //}
+                };
                 itemContextMenu.Items.Add(renameMenuItem);
 
                 MenuItem CopyMenuItem = new MenuItem();
                 CopyMenuItem.Header = "Copy";
-                CopyMenuItem.Click +=  (s, args) =>
+                CopyMenuItem.Click += (s, args) =>
                 {
-                   _profileService.CopyProfile(_selectedProfile.Key);
-                   _profileFiles = _profileService.GetFoldersAndProfiles();                   
-                   ProfileListView.Items.Refresh();
+                    _profileService.CopyProfile(_selectedProfile.Key);
+                    _profileFiles = _profileService.GetFoldersAndProfiles();
+                    ProfileListView.Items.Refresh();
                 };
 
                 itemContextMenu.Items.Add(CopyMenuItem);
@@ -90,19 +149,7 @@ namespace BF2JoinServerApp
 
         }
 
-        private static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
-        {
-            do
-            {
-                if (current is T ancestor)
-                {
-                    return ancestor;
-                }
-                current = VisualTreeHelper.GetParent(current);
-            } while (current != null);
-            return null;
-        }
-
+       
         private void HostButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -141,6 +188,49 @@ namespace BF2JoinServerApp
                 // Update _selectedProfile
                 _selectedProfile = (KeyValuePair<string, Profile>)ProfileListView.SelectedItem;
             }
+        }
+
+        private void TextBoxProfileName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ListViewItem item = FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
+
+            TextBlock textBlockProfileName = FindVisualChild<TextBlock>(item, "TextBlockProfileName");
+            TextBox textBoxProfileName = FindVisualChild<TextBox>(item, "TextBoxProfileName");
+
+
+            textBoxProfileName.Visibility = Visibility.Collapsed;
+            textBlockProfileName.Visibility = Visibility.Visible;
+            ProfileListView.Items.Refresh();
+           
+        }
+
+        private void TextBoxProfileName_KeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox textBoxProfileName = (TextBox)sender;
+            TextBlock textBlockProfileName = FindVisualChild<TextBlock>(textBoxProfileName.Parent, "TextBlockProfileName");
+
+            if (e.Key == Key.Enter)
+            {               
+                // Save the edited name
+                _profileService.RenameProfile(_selectedProfile.Key, textBoxProfileName.Text);
+
+                // Show the TextBlock and hide the TextBox after editing
+                textBoxProfileName.Visibility = Visibility.Collapsed;
+                textBlockProfileName.Visibility = Visibility.Visible;
+                ProfileListView.Items.Refresh();
+            }
+            if (e.Key == Key.Escape)
+            {
+                textBoxProfileName.Visibility = Visibility.Collapsed;
+                textBlockProfileName.Visibility = Visibility.Visible;
+                ProfileListView.Items.Refresh();
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _profileService.CreateProfile("New Profile (Rename)");
+            ProfileListView.Items.Refresh();
         }
     }
 }

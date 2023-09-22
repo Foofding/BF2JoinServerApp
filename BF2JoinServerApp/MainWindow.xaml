@@ -43,19 +43,42 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <ListView x:Name="ProfileListView"  Grid.Row="0" Margin="20, 0, 20, 10" Opacity="0.9" Background="#FFF2FFFF" FontSize="20" Width="410" Grid.Column="2" HorizontalAlignment="Center" Height="360"
-                  SelectionChanged="ProfileListView_SelectionChanged" SelectionMode="Single">
-            <ListView.View >
-                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Battlefield 2 Profile List" ColumnHeaderStringFormat="left">
-                    <GridView.Columns >
-                        <GridViewColumn DisplayMemberBinding="{Binding Value.Name}" Header="Profiles" Width="410" />
-                        <!-- Add a Button column for Renaming -->                       
-                    </GridView.Columns>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        </Grid.RowDefinitions>    
+            <ListView x:Name="ProfileListView" Grid.Row="0" Margin="20, 20, 20, 10" Opacity="0.9" Background="#FFF2FFFF" FontSize="20" Width="410" Grid.Column="2" HorizontalAlignment="Center" Height="360" SelectionChanged="ProfileListView_SelectionChanged" SelectionMode="Single">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Battlefield 2 Profile List" ColumnHeaderStringFormat="left">
+                        <GridViewColumn Width="390">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Value.Name}" Visibility="Visible" Name="TextBlockProfileName" Width="375"/>
+                                        <TextBox Text="{Binding Value.Name, Mode=OneWay}" Visibility="Collapsed" Name="TextBoxProfileName" LostFocus="TextBoxProfileName_LostFocus" KeyDown="TextBoxProfileName_KeyDown" Width="375" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.HeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                </Style>
+                            </GridViewColumn.HeaderContainerStyle>
+                            <GridViewColumn.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Profiles" HorizontalAlignment="Left" Grid.Column="0"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
+                                        <!-- Empty space -->
+                                    </StackPanel>
+                                    <Button Content="+New " HorizontalAlignment="Right" Grid.Column="2" Background="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click" />
+                                </Grid>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
         <Button x:Name="HostButton" Grid.Row="1" FontSize="24" Click="HostButton_Click" Height="70" Width="190" HorizontalAlignment="Left" Margin="20, 0,0,30" Padding="0">
             <Button.Background>

@@ -100,22 +100,6 @@ namespace BF2JoinServerApp
                     textBoxProfileName.Visibility = Visibility.Visible;
                     textBoxProfileName.Focus();
 
-
-                    //// Create the custom dialog window and pass the current profile name
-                    //RenameProfileWindow renameWindow = new RenameProfileWindow(_selectedProfile.Key);
-
-                    //// Show the dialog as a modal window
-                    //if (renameWindow.ShowDialog() == true)
-                    //{
-                    //    // Get the new profile name from the dialog window
-                    //    string newProfileName = renameWindow.NewProfileName;
-
-                    //    // Update the profile name with the new value
-                    //    _profileService.RenameProfile(_selectedProfile.Key, newProfileName);
-
-                    //    // Refresh the ListView or update the UI as needed
-                    //    ProfileListView.Items.Refresh();
-                    //}
                 };
                 itemContextMenu.Items.Add(renameMenuItem);
 

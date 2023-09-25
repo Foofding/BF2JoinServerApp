@@ -143,6 +143,7 @@ namespace BF2JoinServerApp
         {
             lock (this)
             {
+                //hostFoundEvent is an object of the ManualResetEvent class
                 hostFoundEvent.Set();
                 HostIP = address;
             }

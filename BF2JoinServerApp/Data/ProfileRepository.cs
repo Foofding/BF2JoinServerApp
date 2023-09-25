@@ -302,7 +302,7 @@ namespace BF2JoinServerApp.Data
         }
 
         /// <summary>
-        /// 
+        /// Finds the lowest missing instance of a profile folder and provides its folder number
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>

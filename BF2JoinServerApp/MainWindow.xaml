@@ -72,7 +72,7 @@
                                     <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center">
                                         <!-- Empty space -->
                                     </StackPanel>
-                                <Button Content="NEW" HorizontalAlignment="Right" Grid.Column="3" Background="LawnGreen" BorderThickness="1" BorderBrush="Black" Click="Button_Click"/>
+                                <Button Padding="4,0,4,0" Content="New" HorizontalAlignment="Right" Grid.Column="3" BorderThickness="1" BorderBrush="Black" Click="Button_Click" Background="#FFB5F19B"/>
                                 </Grid>
                             </GridViewColumn.Header>
                         </GridViewColumn>

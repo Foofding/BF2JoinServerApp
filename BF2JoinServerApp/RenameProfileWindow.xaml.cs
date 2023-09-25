@@ -39,18 +39,5 @@ namespace BF2JoinServerApp
         }
 
 
-
-        //private void SaveButton_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
-        //{
-        //    NewProfileName = ProfileNameTextBox.Text;
-        //    DialogResult = true;
-        //    this.Close();
-        //}
-
-        //private void CancelButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        //{
-
-        //    Debug.Write("CANCEL CLICKED!");
-        //}
     }
 }
